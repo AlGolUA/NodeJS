@@ -1,10 +1,11 @@
-var nodePath = process.argv[0];
-var appPath = process.argv[1];
-var name = process.argv[2];
-var age = process.argv[3];
+var http = require("http");
  
-console.log("nodePath: " + nodePath);
-console.log("appPath: " + appPath);
-console.log();
-console.log("name: " + name);
-console.log("age: " + age);
+var message = "Hello World!";
+http.createServer(function(request,response){
+     
+    console.log(message);
+    response.end(message);
+     
+}).listen(3000, "127.0.0.1",()=>{
+    console.log("Сервер начал прослушивание запросов");
+});
