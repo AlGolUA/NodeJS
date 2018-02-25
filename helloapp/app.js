@@ -1,15 +1,18 @@
-var Emitter = require("events");
-var emitter = new Emitter();
-var helloEvent = "hello";
-var greetEvent = "greet";
-
-emitter.on(greetEvent, function(){
-    console.log("Hello");
+var util = require("util");
+var EventEmitter = require("events");
+ 
+function User(){
+}
+util.inherits(User, EventEmitter);
+ 
+var eventName = "greet";
+User.prototype.sayHi = function(data){
+    this.emit(eventName, data);
+}
+var user = new User();
+// добавляем к объекту user обработку события "greet"
+user.on(eventName, function(data){
+    console.log(data);
 });
-
-emitter.on(helloEvent, function(data){
-    console.log("Привет, " + data);
-});
-
-emitter.emit(greetEvent); 
-emitter.emit(helloEvent, "Мир");
+ 
+user.sayHi("Мне нужна твоя одежда...");
