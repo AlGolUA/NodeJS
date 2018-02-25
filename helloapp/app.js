@@ -1,4 +1,6 @@
-var welcome = require("./welcome");
+var greeting = require("./greeting");
  
-welcome.getMorningMessage();
-welcome.getEveningMessage();
+global.name = "Eugene";
+ 
+global.console.log(date);
+console.log(greeting.getMessage());
