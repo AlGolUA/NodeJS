@@ -1,11 +1,35 @@
-var http = require("http");
+function display(data, callback){
  
-var message = "Hello World!";
-http.createServer(function(request,response){
+    // с помощью случайного числа определяем ошибку
+    var randInt = Math.random() * (10 - 1) + 1;
+    var err = randInt>8? new Error("Ошибка выполнения. randInt больше 8"): null;
      
-    console.log(message);
-    response.end(message);
-     
-}).listen(3000, "127.0.0.1",()=>{
-    console.log("Сервер начал прослушивание запросов");
+    setTimeout(function(){
+        callback(err, data);
+    }, 0);
+}
+ 
+console.log("Начало работы программы");
+ 
+display("Обработка данных...", function (err, data){
+ 
+    if(err) throw err;
+    console.log(data);
 });
+ 
+function displaySync(callback){
+    callback();
+}
+ 
+setTimeout(function(){
+         
+        console.log("timeout 500");
+}, 500);
+ 
+setTimeout(function(){
+         
+        console.log("timeout 100");
+}, 100);
+ 
+displaySync(function(){console.log("without timeout")});
+console.log("Завершение работы программы");
