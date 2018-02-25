@@ -1,35 +1,24 @@
-function display(data, callback){
- 
-    // с помощью случайного числа определяем ошибку
-    var randInt = Math.random() * (10 - 1) + 1;
-    var err = randInt>8? new Error("Ошибка выполнения. randInt больше 8"): null;
-     
-    setTimeout(function(){
-        callback(err, data);
-    }, 0);
-}
- 
-console.log("Начало работы программы");
- 
-display("Обработка данных...", function (err, data){
- 
-    if(err) throw err;
-    console.log(data);
+var fs = require("fs");
+
+// асинхронное чтение
+fs.readFile("hello.txt", "utf8", 
+			function(error,data){
+				console.log("Асинхронное чтение файла");
+				if(error) throw error; // если возникла ошибка
+				console.log(data);	// выводим считанные данные
+				fs.writeFile("hello_out1.txt", data);
+				console.log("Синхронная запись файла завершена");
+
+
 });
- 
-function displaySync(callback){
-    callback();
-}
- 
-setTimeout(function(){
-         
-        console.log("timeout 500");
-}, 500);
- 
-setTimeout(function(){
-         
-        console.log("timeout 100");
-}, 100);
- 
-displaySync(function(){console.log("without timeout")});
-console.log("Завершение работы программы");
+
+// синхронное чтение
+console.log("Синхронное чтение файла")
+var fileContent = fs.readFileSync("hello.txt", "utf8");
+console.log(fileContent);
+fs.writeFile("hello_out2.txt", fileContent, function(error){
+				if(error) throw error; // если возникла ошибка
+				console.log("Асинхронная запись файла завершена. Содержимое файла:");
+				var data = fs.readFileSync("hello_out2.txt", "utf8");
+				console.log(data);	// выводим считанные данные
+});
