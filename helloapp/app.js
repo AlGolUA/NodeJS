@@ -1,18 +1,11 @@
-var util = require("util");
-var EventEmitter = require("events");
- 
-function User(){
-}
-util.inherits(User, EventEmitter);
- 
-var eventName = "greet";
-User.prototype.sayHi = function(data){
-    this.emit(eventName, data);
-}
-var user = new User();
-// добавляем к объекту user обработку события "greet"
-user.on(eventName, function(data){
-    console.log(data);
+var fs = require("fs");
+
+var writeableStream = fs.createWriteStream("hello.txt");
+writeableStream.write("Привет мир!");
+writeableStream.write("Продолжение записи \n");
+writeableStream.end("Завершение записи");
+var readableStream = fs.createReadStream("hello.txt", "utf8");
+
+readableStream.on("data", function(chunk){ 
+	console.log(chunk);
 });
- 
-user.sayHi("Мне нужна твоя одежда...");
