@@ -1,11 +1,9 @@
-var os = require("os");
-var greeting = require("./greeting");
-
-var User = require("./user.js");
-var eugene = new User("Eugene", 32);
-eugene.sayHi();
+var greeting1 = require("./greeting.js");
+console.log(`Hello ${greeting1.name}`); //Hello Alice
  
-// получим имя текущего пользователя
-var userName = os.userInfo().username;
-console.log(`Дата запроса: ${greeting.date}`); // ё для кавычек строки, параметры ${} в которой должны интерполироваться
-console.log(greeting.getMessage(userName));
+var greeting2 = require("./greeting.js");
+greeting2.name= "Bob";
+ 
+console.log(`Hello ${greeting2.name}`); //Hello Bob
+// greeting1.name тоже изменилось
+console.log(`Hello ${greeting1.name}`); //Hello Bob
