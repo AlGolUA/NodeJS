@@ -1,10 +1,15 @@
-var fs = require("fs");
-var zlib = require("zlib");
+var http = require("http");
 
-var readableStream = fs.createReadStream("hello.txt", "utf8");
+http.createServer(function(request, response){
+	
+	console.log("Url: " + request.url);
+	console.log("Тип запроса: " + request.method);
+	console.log("User-Agent: " + request.headers["user-agent"]);
+	console.log("Все заголовки");
+	console.log(request.headers);
 
-var writeableStream = fs.createWriteStream("hello.txt.gz");
-
-var gzip = zlib.createGzip();
-
-readableStream.pipe(gzip).pipe(writeableStream);
+	response.setHeader("UserId", 12);
+	response.setHeader("Content-Type", "text/html");
+	response.write("<h2>hello world</h2>");
+	response.end();
+}).listen(3000);
